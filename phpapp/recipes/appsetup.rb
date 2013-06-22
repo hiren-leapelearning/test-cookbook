@@ -11,11 +11,18 @@ node[:deploy].each do |app_name, deploy|
       owner "apache"
     end
 
-    variables(
-      :host =>     (deploy[:database][:host] rescue nil),
-      :user =>     (deploy[:database][:username] rescue nil),
-      :password => (deploy[:database][:password] rescue nil),
-      :db =>       (deploy[:database][:database] rescue nil),
+    #variables(
+    #  :host =>     (deploy[:database][:host] rescue nil),
+    #  :user =>     (deploy[:database][:username] rescue nil),
+    #  :password => (deploy[:database][:password] rescue nil),
+    #  :db =>       (deploy[:database][:database] rescue nil),
+    #  :table =>    (node[:phpapp][:dbtable] rescue nil)
+    #)
+    variables(
+      :host =>     ("host_name_here" rescue nil),
+      :user =>     ("user_here" rescue nil),
+      :password => ("pass_here" rescue nil),
+      :db =>       ("database_here" rescue nil),
       :table =>    (node[:phpapp][:dbtable] rescue nil)
     )
 
