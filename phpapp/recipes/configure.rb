@@ -11,13 +11,6 @@ node[:deploy].each do |application, deploy|
       owner "apache"
     end
 
-    #variables(
-    #  :host =>     (deploy[:database][:host] rescue nil),
-    #  :user =>     (deploy[:database][:username] rescue nil),
-    #  :password => (deploy[:database][:password] rescue nil),
-    #  :db =>       (deploy[:database][:database] rescue nil),
-    #  :table =>    (node[:phpapp][:dbtable] rescue nil)
-    #)
     variables(
       :host =>     "host_name_here",
       :user =>     "user_here",
