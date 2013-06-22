@@ -1,5 +1,7 @@
 node[:deploy].each do |application, deploy|
 
+Chef::Log.debug("start phpapp configure.rb")
+Chef::Log.debug("#{deploy[:deploy_to]}/current/db-connect.php")
   template "#{deploy[:deploy_to]}/current/db-connect.php" do
     source "db-connect.php.erb"
     mode 0660
@@ -23,5 +25,6 @@ node[:deploy].each do |application, deploy|
      File.exists?("#{deploy[:deploy_to]}/current")
    end
   end
+Chef::Log.debug("end phpapp configure.rb")
 end
 
