@@ -1,17 +1,13 @@
 node[:deploy].each do |application, deploy|
     Chef::Log.debug("start phpapp configure.rb")
     Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
-    
-    template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
-        source "dbconnect.php.erb"
-        mode 0660
-        group deploy[:group]
 
-        if platform?("ubuntu")
-          owner "www-data"
-        elsif platform?("amazon")
-          owner "apache"
-        end
+    template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
+         
+        source 'dbconnect.php.erb'
+        mode '0660'
+        owner node[:deploy][application][:user]
+        group node[:deploy][application][:group]
 
         variables(
           :host =>     "host_name_here",
@@ -22,7 +18,7 @@ node[:deploy].each do |application, deploy|
         )
 
        only_if do
-         File.directory?("#{node[:deploy][application][:deploy_to]}/current")
+         File.exists?("#{node[:deploy][application][:deploy_to]}/current")
        end
       end
 
