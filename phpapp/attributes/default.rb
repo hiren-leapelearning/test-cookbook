@@ -1,1 +1,1 @@
-include_attribute 'deploy'
+include_attribute "deploy::deploy"
