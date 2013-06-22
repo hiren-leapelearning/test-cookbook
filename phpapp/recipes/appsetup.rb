@@ -1,4 +1,4 @@
-node[:deploy].each do |app_name, deploy|
+node[:deploy].each do |application, deploy|
 
   template "#{node[:deploy][application][:deploy_to]}/current/db-connect.php" do
     source "db-connect.php.erb"
