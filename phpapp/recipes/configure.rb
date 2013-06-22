@@ -24,9 +24,10 @@ node[:deploy].each do |application, deploy|
         )
 
        only_if do
-         File.directory?("#{deploy[:deploy_to]}/current")
+         File.directory?("#{node[:deploy][application][:deploy_to]}/current")
        end
       end
+
     Chef::Log.debug("end phpapp configure.rb")
     Chef::Log.info "end phpapp configure.rb"
 
