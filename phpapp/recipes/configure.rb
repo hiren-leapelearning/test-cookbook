@@ -5,7 +5,7 @@ node[:deploy].each do |application, deploy|
     Chef::Log.info "#{node[:deploy][application][:deploy_to]}/current"
 
     template "#{node[:deploy][application][:deploy_to]}/current/db-connect.php" do
-        source "db-connect.php.erb"
+        source "dbconnect.php.erb"
         mode 0660
         group deploy[:group]
 
