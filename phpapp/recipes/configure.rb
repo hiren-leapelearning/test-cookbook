@@ -1,21 +1,21 @@
 node[:deploy].each do |application, deploy|
-Chef::Log.debug("start phpapp configure.rb")
-Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
-template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
-source "#{node[:deploy][application][:rails_env]}/dbconnect.php.erb"
-mode '0660'
-owner node[:deploy][application][:user]
-group node[:deploy][application][:group]
-variables(
-:host =>     "host_name_here",
-:user =>     "user_here",
-:password => "pass_here",
-:db =>       "database_here",
-:table =>    "table_here")
-only_if do
-File.exists?("#{node[:deploy][application][:deploy_to]}/current")
-end
-end
+  Chef::Log.debug("start phpapp configure.rb")
+  Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
+  template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
+    source 'dbconnect.php.erb'
+    mode '0660'
+    owner node[:deploy][application][:user]
+    group node[:deploy][application][:group]
+    variables(
+      :host =>     "host",
+      :user =>     "user",
+      :password => "pass",
+      :db =>       "database",
+      :table =>    "table")
+      only_if do
+        File.exists?("#{node[:deploy][application][:deploy_to]}/current")
+      end
+    end
 Chef::Log.debug("end phpapp configure.rb")
 Chef::Log.info "end phpapp configure.rb"
 end
