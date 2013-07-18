@@ -2,7 +2,7 @@ node[:deploy].each do |application, deploy|
 Chef::Log.debug("start phpapp configure.rb")
 Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
 template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
-source 'dbconnect.php.erb'
+source "#{node[:deploy][application][:rails_env]}/dbconnect.php.erb"
 mode '0660'
 owner node[:deploy][application][:user]
 group node[:deploy][application][:group]
