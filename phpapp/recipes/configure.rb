@@ -1,6 +1,7 @@
 node[:deploy].each do |application, deploy|
   Chef::Log.debug("start phpapp configure.rb")
   Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
+  Chef::Log.debug("#{node[:environment]}")
   template "#{node[:deploy][application][:deploy_to]}/current/dbconnect.php" do
     source "#{node[:environment]}/dbconnect.php.erb"
     mode '0660'
