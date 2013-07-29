@@ -17,6 +17,7 @@ node[:deploy].each do |application, deploy|
         File.exists?("#{node[:deploy][application][:deploy_to]}/current")
       end
     end
+    ln -sf "/mnt/writeable/pdf/" "#{node[:deploy][application][:deploy_to]}/current/pdf/"
 Chef::Log.debug("end phpapp configure.rb")
 Chef::Log.info "end phpapp configure.rb"
 end
