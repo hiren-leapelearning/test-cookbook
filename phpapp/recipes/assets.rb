@@ -17,7 +17,13 @@ node[:deploy].each do |application, deploy|
   end
   Chef::Log.debug("finish copy_assets")
   Chef::Log.debug("start cleanup")
-  cleanup_dir = {"#{current_path}/utilities/cap" "#{current_path}/utilities/deploy-files" "#{current_path}/utilities/AutoCompile.app" "#{current_path}/utilities/deploy"}
+  cleanup_dir = [
+    "#{current_path}/utilities/cap",
+    "#{current_path}/utilities/deploy-files",
+    "#{current_path}/utilities/AutoCompile.app",
+    "#{current_path}/utilities/deploy"
+  ]
+  
   cleanup_dir.each do |dir|
     if (FileTest.directory(dir))
       directory dir do
@@ -26,6 +32,7 @@ node[:deploy].each do |application, deploy|
       end
     end
   end
+  
   Chef::Log.debug("finish cleanup")
   Chef::Log.debug("finish phpapp assets.rb")
 end
