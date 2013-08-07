@@ -21,7 +21,7 @@ node[:deploy].each do |application, deploy|
   cleanup_dir.each do |dir|
     if (FileTest.directory(dir))
       directory dir do
-        recursive: true
+        recursive true
         action: delete
       end
     end
