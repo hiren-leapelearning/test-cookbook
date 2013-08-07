@@ -22,7 +22,7 @@ node[:deploy].each do |application, deploy|
     if (FileTest.directory(dir))
       directory dir do
         recursive true
-        action: delete
+        action :delete
       end
     end
   end
