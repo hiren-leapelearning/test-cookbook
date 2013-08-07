@@ -3,7 +3,7 @@ node[:deploy].each do |application, deploy|
   Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
   Chef::Log.debug("#{node[:environment]}")
   current_path = "#{node[:deploy][application][:deploy_to]}/current/"
-  Chef::Log.debug("#{current_path}")
+  Chef::Log.debug("start copy_assets")
   bash "copy_assets" do
     code <<-EOH
     cp #{current_path}/utilities/deploy-files/lms/#{node[:environment]}/database.php #{current_path}/application_lms/config/ 
@@ -15,7 +15,17 @@ node[:deploy].each do |application, deploy|
     cp #{current_path}/utilities/deploy-files/lms/#{node[:environment]}/database.inc.php #{current_path}/utilities/ruckusing/config/ 
     EOH
   end
-  
-  Chef::Log.debug("end phpapp assets.rb")
-  Chef::Log.info "end phpapp assets.rb"
+  Chef::Log.debug("finish copy_assets")
+  Chef::Log.debug("start cleanup")
+  cleanup_dir = {"#{current_path}/utilities/cap" "#{current_path}/utilities/deploy-files" "#{current_path}/utilities/AutoCompile.app" "#{current_path}/utilities/deploy"}
+  cleanup_dir.each do |dir|
+    if (FileTest.directory(dir))
+      directory dir do
+        recursive: true
+        action: delete
+      end
+    end
+  end
+  Chef::Log.debug("finish cleanup")
+  Chef::Log.debug("finish phpapp assets.rb")
 end
