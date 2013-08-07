@@ -2,7 +2,7 @@ node[:deploy].each do |application, deploy|
   Chef::Log.debug("start phpapp assets.rb")
   Chef::Log.debug("#{node[:deploy][application][:deploy_to]}/current")
   Chef::Log.debug("#{node[:environment]}")
-  Chef::Log.debug("#{current_release}")
+  Chef::Log.debug("#{release_path}")
   template "#{release_path}/application_lms/config/database.php" do
     source "#{release_path}/utilities/deploy-files/lms/#{node[:environment]}/database.php"
   end
