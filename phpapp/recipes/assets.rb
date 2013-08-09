@@ -23,7 +23,7 @@ node[:deploy].each do |application, deploy|
   
   Chef::Log.debug("start cleanup directory")
   cleanup_dir = [
-    "#{current_path}/.git"
+    "#{current_path}/.git",
     "#{current_path}/utilities/cap",
     "#{current_path}/utilities/deploy-files",
     "#{current_path}/utilities/AutoCompile.app",
@@ -40,7 +40,7 @@ node[:deploy].each do |application, deploy|
   
   Chef::Log.debug("start cleanup files")
   cleanup_file = [
-    "#{current_path}/.gitignore"
+    "#{current_path}/.gitignore",
     "#{current_path}/utilities/autocompile.conf"
   ]
   cleanup_file.each do |cleanup_file_name| 
