@@ -23,14 +23,15 @@ node[:deploy].each do |application, deploy|
   
   Chef::Log.debug("start cleanup directory")
   cleanup_dir = [
+    "#{current_path}/.git"
     "#{current_path}/utilities/cap",
     "#{current_path}/utilities/deploy-files",
     "#{current_path}/utilities/AutoCompile.app",
     "#{current_path}/utilities/deploy"
   ]
   
-  cleanup_dir.each do |dir_name|
-    directory dir_name do
+  cleanup_dir.each do |cleanup_dir_name|
+    directory cleanup_dir_name do
       recursive true
       action :delete
     end
@@ -39,10 +40,11 @@ node[:deploy].each do |application, deploy|
   
   Chef::Log.debug("start cleanup files")
   cleanup_file = [
+    "#{current_path}/.gitignore"
     "#{current_path}/utilities/autocompile.conf"
   ]
-  cleanup_file.each do |file_name| 
-    file file_name do 
+  cleanup_file.each do |cleanup_file_name| 
+    file cleanup_file_name do 
       action :delete
     end
   end
@@ -51,5 +53,43 @@ node[:deploy].each do |application, deploy|
   Chef::Log.debug("finish cleanup")
   
   
+  Chef::Log.debug("start create directory")
+  create_dir = [
+    "#{current_path}/application_lms/cache"
+    "#{current_path}/public_lms/tmp"
+  ]    
+  create_dir.each do |create_dir_name|
+    directory create_dir_name do
+      owner "root"
+      group "root"
+      mode 0777
+      action :create
+    end
+  end
+  Chef::Log.debug("finish create directory")
+  
+  Chef::Log.debug("start create symlink")
+  link_dir = [
+    ["/mnt/writeable/userlogs", "#{current_path}/public_lms/userlogs"],
+    ["/mnt/writeable/pdf", "#{current_path}/public_lms/pdf"],
+    #["#{shared_path}/wkhtmltopdf", "#{current_path}/public_lms/wkhtmltopdf"],
+    ["/mnt/courses", "#{current_path}/public_lms/courses"],
+    ["/mnt/courses/showreels", "#{current_path}/public_lms/showreels"],
+    ["/mnt/writeable/brochure", "#{current_path}/public_lms/assets/pdf"]    
+  ]
+  link_dir.each do |link_dir_name, link_to_dir_name|
+    link link_dir_name do
+      to link_to_dir_name
+      only_if do
+        ::File.exists?(link_to_dir_name)
+      end
+    end
+  end  
+  Chef::Log.debug("finish create symlink")
+  
+  
   Chef::Log.debug("finish phpapp assets.rb")
+  
+  
+  #create code for shared files not wiped out in deployment
 end
