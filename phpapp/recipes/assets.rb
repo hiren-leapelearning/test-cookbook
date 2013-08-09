@@ -77,7 +77,7 @@ node[:deploy].each do |application, deploy|
     ["/mnt/courses/showreels", "#{current_path}/public_lms/showreels"],
     ["/mnt/writeable/brochure", "#{current_path}/public_lms/assets/pdf"]    
   ]
-  link_dir.each do |link_dir_name, link_to_dir_name|
+  link_dir.each do |link_to_dir_name, link_dir_name|
     link link_dir_name do
       to link_to_dir_name
       only_if do
