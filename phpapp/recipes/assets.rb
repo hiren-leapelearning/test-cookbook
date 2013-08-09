@@ -16,7 +16,12 @@ node[:deploy].each do |application, deploy|
     EOH
   end
   Chef::Log.debug("finish copy_assets")
+  
+  
+  
   Chef::Log.debug("start cleanup")
+  
+  Chef::Log.debug("start cleanup directory")
   cleanup_dir = [
     "#{current_path}/utilities/cap",
     "#{current_path}/utilities/deploy-files",
@@ -24,13 +29,27 @@ node[:deploy].each do |application, deploy|
     "#{current_path}/utilities/deploy"
   ]
   
-  cleanup_dir.each do |dir|
-    directory dir do
+  cleanup_dir.each do |dir_name|
+    directory dir_name do
       recursive true
       action :delete
     end
   end
+  Chef::Log.debug("finish cleanup directory")
+  
+  Chef::Log.debug("start cleanup files")
+  cleanup_file = [
+    "#{current_path}/utilities/autocompile.conf"
+  ]
+  cleanup_file.each do |file_name| 
+    file file_name do 
+      action :delete
+    end
+  end
+  Chef::Log.debug("finish cleanup files")  
   
   Chef::Log.debug("finish cleanup")
+  
+  
   Chef::Log.debug("finish phpapp assets.rb")
 end
