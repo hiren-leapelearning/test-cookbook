@@ -55,7 +55,7 @@ node[:deploy].each do |application, deploy|
   
   Chef::Log.debug("start create directory")
   create_dir = [
-    "#{current_path}/application_lms/cache"
+    "#{current_path}/application_lms/cache",
     "#{current_path}/public_lms/tmp"
   ]    
   create_dir.each do |create_dir_name|
